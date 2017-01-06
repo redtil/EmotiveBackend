@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var mongo = require('mongodb');
+var assert = require('assert');
 
 
-var url = 'mongodb://localhost:27017/test';
+var url = 'mongodb://redtil:future8:12@ds145848.mlab.com:45848/emotivebackend-db';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
