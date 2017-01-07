@@ -6,15 +6,24 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcryptjs":"*",
+    "connect-flash":"*",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "~4.14.0",
+    "express-session":"*",
+    "express-validator":"*",
+    "mongoose":"*",
+    "passport":"*",
+    "passport-http":"*",
+    "passport-local":"*",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
     "mongodb": "latest",
-    "assert": "latest"
+    "assert": "latest",
+    "flickrapi":"latest"
 
   }
 }
