@@ -8,17 +8,18 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var assert = require('assert');
 var Flickr = require('flickrapi');
+var User = require('../models/Users');
 
 var flickrOptions = {
     api_key:'4aaeddd00e3be920ffb847186e27534e',
     secret:'ba71a1135ae7f57d'
-}
-
-
+};
 
 var url = 'mongodb://redtil:future812@ds145848.mlab.com:45848/emotivebackend-db';
 mongoose.connect(url);
 var db = mongoose.connection;
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -57,16 +58,23 @@ router.get('/get-data', function(req, res, next) {
 });
 
 router.post('/users/register',function(req,res){
-    console.log(req.body);
+
     console.log(req.body.username);
-    console.log(req.body.email);
     console.log(req.body.password);
-    console.log(req.body.confirmpassword);
-    // var name = req.body.name;
-    // var email = req.body.email;
-    // var username = req.body.username;
-    // var password = req.body.password;
-    // var password2 = req.body.password2;
+
+
+    var name = req.body.username;
+
+    var newUser = new User({
+        username: req.body.username,
+        password: req.body.password
+    });
+
+    User.createUser(newUser, function(err, user){
+        if(err) throw err;
+        console.log(user);
+    });
+
 });
 
 router.post('/users/login',function(req,res){
