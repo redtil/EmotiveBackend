@@ -4,10 +4,14 @@ var mongo = require('mongodb');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var assert = require('assert');
 var Flickr = require('flickrapi');
+
+
+
 var User = require('../models/Users');
 
 var flickrOptions = {
@@ -77,10 +81,46 @@ router.post('/users/register',function(req,res){
 
 });
 
-router.post('/users/login',function(req,res){
 
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        User.getUserByUsername(username,function(err,user){
+
+            console.log(user);
+            if(err) throw err;
+            if(!user){
+                return done(null, false, {message: 'Unknown User'});
+            }
+
+            User.comparePassword(password, user.password, function(err, isMatch){
+                if(err) throw err;
+                if(isMatch){
+                    console.log("is Match!");
+                    return done(null, user);
+                } else {
+                    return done(null, false, {message:'Invalid password'});
+                }
+            });
+        })
+    }
+));
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
 });
 
+passport.deserializeUser(function(id, done) {
+    User.getUserById(id, function(err, user) {
+        done(err, user);
+    });
+});
+
+router.post('/users/login',
+    passport.authenticate('local'),
+    function(req, res) {
+        console.log("I am in authenticated");
+        res.send({'status': "success"});}
+);
 
 router.post('/insert', function(req, res, next) {
 
