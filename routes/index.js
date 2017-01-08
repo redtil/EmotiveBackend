@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var LocalStrategy = require('passport-local').Strategy;
+var mongoose = require('mongoose');
 var assert = require('assert');
 var Flickr = require('flickrapi');
 
@@ -11,7 +16,9 @@ var flickrOptions = {
 
 
 
-var url = 'mongodb://redtil:future8:12@ds145848.mlab.com:45848/emotivebackend-db';
+var url = 'mongodb://redtil:future812@ds145848.mlab.com:45848/emotivebackend-db';
+mongoose.connect(url);
+var db = mongoose.connection;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -48,6 +55,24 @@ router.get('/get-data', function(req, res, next) {
         }
     })
 });
+
+router.post('/users/register',function(req,res){
+    console.log(req.body);
+    console.log(req.body.username);
+    console.log(req.body.email);
+    console.log(req.body.password);
+    console.log(req.body.confirmpassword);
+    // var name = req.body.name;
+    // var email = req.body.email;
+    // var username = req.body.username;
+    // var password = req.body.password;
+    // var password2 = req.body.password2;
+});
+
+router.post('/users/login',function(req,res){
+
+});
+
 
 router.post('/insert', function(req, res, next) {
 
