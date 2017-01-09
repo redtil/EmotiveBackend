@@ -130,6 +130,7 @@ router.post('/users/login',
 
 router.post('/users/logout',function(req,res){
     req.logout();
+    res.send({'status':"success"});
 });
 
 router.post('/insert', function(req, res, next) {
