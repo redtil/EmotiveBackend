@@ -31,6 +31,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/get-data', function(req, res, next) {
+    console.log("get-data got calleld");
     Flickr.tokenOnly(flickrOptions,function(error,flickr){
         flickr.photos.search({text:"Brazil",
         tag:"Brasil",
@@ -106,11 +107,16 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
+    console.log("I am in serializeUser");
     done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
+    console.log("I am in deserializeUser");
+    console.log(id);
     User.getUserById(id, function(err, user) {
+        console.log(user);
+        console.log("I got the user by id");
         done(err, user);
     });
 });
@@ -121,6 +127,10 @@ router.post('/users/login',
         console.log("I am in authenticated");
         res.send({'status': "success"});}
 );
+
+router.post('/users/logout',function(req,res){
+    req.logout();
+});
 
 router.post('/insert', function(req, res, next) {
 

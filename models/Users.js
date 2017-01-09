@@ -36,5 +36,5 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 };
 
 module.exports.getUserById = function(id, callback){
-    User.findById(query,callback);
+    User.findById({_id:id},callback);
 }
