@@ -23,7 +23,11 @@
     "serve-favicon": "~2.3.0",
     "mongodb": "*",
     "assert": "latest",
-    "flickrapi":"latest"
+    "flickrapi":"latest",
+    "@google-cloud/vision": "0.7.0",
+    "async": "2.1.4",
+    "node-cloud-vision-api":"*",
+    "express-formidable":"*"
 
   }
 }
